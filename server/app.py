@@ -20,6 +20,7 @@ app.add_middleware(
 
 queue = []
 
+
 async def aread_file(file_name: str):
     with open(file_name, "r") as f:
         while True:
@@ -33,16 +34,14 @@ async def aread_file(file_name: str):
             yield c
             await asyncio.sleep(0.1)
 
+
 @app.get("/stream")
 def get_stream():
     if queue:
         queue.pop()
-        return EventSourceResponse(
-            content=aread_file("sample.txt")
-        )
-    return EventSourceResponse(
-        content=iter(())
-    )
+        return EventSourceResponse(content=aread_file("sample.txt"))
+    return EventSourceResponse(content=iter(()))
+
 
 @app.post("/stream")
 def post_user_message(payload: UserMessage):
