@@ -1,26 +1,30 @@
-import { FormEvent, SyntheticEvent, useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { SyntheticEvent, useEffect, useState } from 'react'
+
+import ChatMessage from './components/ChatMessage';
+
+type ChatMessage = {
+  user: string,
+  content: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ aiResponse, setAiResponse ] = useState("");
+  const [ userMessage, setUserMessage ] = useState("");
+  const [ messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault()
-    const target = e.target as typeof e.target & {
-      userMessage: { value: string };
-    };
+    
     const result = await fetch('http://127.0.0.1:8000/stream', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        'Accept': 'text',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({message: target.userMessage.value})
+      body: JSON.stringify({message: userMessage})
     })
     if (result.ok) {
-      console.log(result.json())
+      setMessageHistory([...messageHistory, {user: "user", content: userMessage} ])
     }
   }
 
@@ -29,46 +33,39 @@ function App() {
       withCredentials: true,
     })
 
-    evntSource.onmessage = (event) => {
-      setCount((prev) => prev + event.data)
-    }
+    let accumMessage = "";
+
+    evntSource.addEventListener("message", (event) => {
+      accumMessage += event.data
+      setAiResponse(accumMessage)
+    })
+
+    evntSource.addEventListener("end", (_) => {
+      setMessageHistory([...messageHistory, {user: "system", content: aiResponse}])
+    })
+
+    evntSource.addEventListener("error", (_) => {
+      evntSource.close()
+    })
 
     return () => evntSource.close()
-  }, [])
+  }, [messageHistory])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <main>  
+      <div className="chatWindow" style={{ height: '90vh', overflowY: 'auto', paddingRight: '0.5rem' }}>
+        {messageHistory.map((message, idx) => {
+          return <ChatMessage key={idx} user={message.user} content={message.content} />
+        })}
+        <ChatMessage user="system" content={aiResponse} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="userMessageForm" onSubmit={handleSubmit}>
-        <form method="POST">
-          <input type="text" name='userMessage' />
-          <br />
-          <button type='submit'>Send</button>
+      <div className='chatInput'>
+        <form method='POST' onSubmit={handleSubmit}>
+          <input type="text" name='userMessage' onChange={(e) => setUserMessage(e.target.value)} />
+          <button>Send</button>
         </form>
       </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <ul id='list'>
-
-      </ul>
-    </>
+    </main>
   )
 }
 
