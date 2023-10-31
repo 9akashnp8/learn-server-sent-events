@@ -7,7 +7,19 @@
     <title>Vite App</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main>
+      <section class="chatWindow">
+        <div class="chatMessages">
+          <ul class="chatLog"></ul>
+        </div>
+        <div class="chatInput">
+          <form method="POST" id="chatInputForm">
+            <input type="text" name="userMessage" placeholder="Enter your message">
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+    </main>
     <script type="module" src="/main.js"></script>
   </body>
 </html>
