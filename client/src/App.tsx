@@ -1,32 +1,12 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import type { ChatMessageType } from './types';
 import ChatMessage from './components/ChatMessage';
-
-type ChatMessage = {
-  user: string,
-  content: string
-}
+import ChatInput from './components/ChatInput';
 
 function App() {
   const [ aiResponse, setAiResponse ] = useState("");
-  const [ userMessage, setUserMessage ] = useState("");
-  const [ messageHistory, setMessageHistory] = useState<ChatMessage[]>([])
-
-  async function handleSubmit(e: SyntheticEvent) {
-    e.preventDefault()
-    
-    const result = await fetch('http://127.0.0.1:8000/stream', {
-      method: 'POST',
-      headers: {
-        'Accept': 'text',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({message: userMessage})
-    })
-    if (result.ok) {
-      setMessageHistory([...messageHistory, {user: "user", content: userMessage} ])
-    }
-  }
+  const [ messageHistory, setMessageHistory] = useState<ChatMessageType[]>([])
 
   useEffect(() => {
     const evntSource = new EventSource("http://127.0.0.1:8000/stream", {
@@ -59,12 +39,7 @@ function App() {
         })}
         <ChatMessage user="system" content={aiResponse} />
       </div>
-      <div className='chatInput'>
-        <form method='POST' onSubmit={handleSubmit}>
-          <input type="text" name='userMessage' onChange={(e) => setUserMessage(e.target.value)} />
-          <button>Send</button>
-        </form>
-      </div>
+      <ChatInput setMessageHistory={setMessageHistory}/>
     </main>
   )
 }
