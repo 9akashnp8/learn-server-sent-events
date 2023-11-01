@@ -1,3 +1,4 @@
+import './style.css'
 import { createChatMessageEl, createMessageIdPair } from "./utils.js"
 
 let msgId;
@@ -6,6 +7,7 @@ const eventSource = new EventSource('http://127.0.0.1:8000/stream')
 
 eventSource.addEventListener("message", (event) => {
   const aiResponseEl = document.getElementById(msgId.aiMsgId);
+  aiResponseEl.style = ''
   aiResponseEl.innerHTML += `${event.data}`
 })
 
@@ -33,7 +35,7 @@ formEl.addEventListener("submit", async function(e) {
     body: JSON.stringify({message: userMessage})
   })
   if (result.ok) {
-    const aiResponseEl = createChatMessageEl(msgId.aiMsgId);
+    const aiResponseEl = createChatMessageEl(msgId.aiMsgId, true);
     chatLogEl.appendChild(aiResponseEl);
   }
 })
