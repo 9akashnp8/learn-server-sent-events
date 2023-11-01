@@ -45,6 +45,5 @@ def get_stream():
 
 @app.post("/stream")
 def post_user_message(payload: UserMessage):
-    message = payload.message
-    queue.append({"id": 1, message: message})
+    queue.append(payload.model_dump())
     return Response("success")

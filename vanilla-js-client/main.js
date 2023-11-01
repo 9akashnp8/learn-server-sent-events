@@ -1,9 +1,11 @@
-import { createChatMessageEl } from "./utils.js"
+import { createChatMessageEl, createMessageIdPair } from "./utils.js"
+
+let msgId;
 
 const eventSource = new EventSource('http://127.0.0.1:8000/stream')
 
 eventSource.addEventListener("message", (event) => {
-  const aiResponseEl = document.getElementById("id-from-server");
+  const aiResponseEl = document.getElementById(msgId.aiMsgId);
   aiResponseEl.innerHTML += `${event.data}`
 })
 
@@ -15,8 +17,10 @@ formEl.addEventListener("submit", async function(e) {
 
   const formData = new FormData(e.target)
   const userMessage = formData.get("userMessage");
+  document.getElementById("userMessage").value = "";
 
-  const userMessageEl = createChatMessageEl("user-message")
+  msgId = createMessageIdPair();
+  const userMessageEl = createChatMessageEl(msgId.userMsgId)
   userMessageEl.innerHTML = userMessage;
   chatLogEl.appendChild(userMessageEl);
 
@@ -29,7 +33,7 @@ formEl.addEventListener("submit", async function(e) {
     body: JSON.stringify({message: userMessage})
   })
   if (result.ok) {
-    const aiResponseEl = createChatMessageEl("id-from-server");
+    const aiResponseEl = createChatMessageEl(msgId.aiMsgId);
     chatLogEl.appendChild(aiResponseEl);
   }
 })
