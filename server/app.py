@@ -18,32 +18,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-queue = []
+streamable_str = ""
 
 
-async def aread_file(file_name: str):
-    with open(file_name, "r") as f:
-        while True:
-            c = f.read(1)
-
-            if not c:
-                yield ServerSentEvent(data="", event="end")
-                f.close()
-                break
-
-            yield ServerSentEvent(data=c, event="message")
-            await asyncio.sleep(0.05)
+async def mock_async_generator(streamable: str):
+    for c in streamable:
+        yield ServerSentEvent(data=c, event="message")
+        await asyncio.sleep(0.05)
 
 
 @app.get("/stream")
 def get_stream():
-    if queue:
-        query = queue.pop()
-        return EventSourceResponse(content=aread_file("sample.txt"))
+    if streamable_str:
+        return EventSourceResponse(content=mock_async_generator(streamable_str))
     return EventSourceResponse(content=iter(()))
 
 
 @app.post("/stream")
 def post_user_message(payload: UserMessage):
-    queue.append(payload.model_dump())
+    global streamable_str
+    streamable_str = payload.message
     return Response("success")
