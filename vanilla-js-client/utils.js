@@ -25,5 +25,6 @@ export function controlFormState(isSubmit) {
     } else {
         document.getElementById("userMessage").removeAttribute("disabled")
         document.getElementById("sendMessageBtn").removeAttribute("disabled")
+        document.getElementById("userMessage").focus()
     }
 }
