@@ -14,7 +14,7 @@ This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org
 
 
 ### Vanilla
-![Chat with Streaming Response Vanilla JS Demo](vanilla-js-demo.gif)
+![Chat with Streaming Response Vanilla JS Demo](docs/vanilla-js-demo.gif)
 
 
 ### React
