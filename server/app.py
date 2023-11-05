@@ -23,7 +23,10 @@ streamable_str = ""
 
 async def mock_async_generator():
     global streamable_str
-    for c in streamable_str:
+    end = len(streamable_str)
+    for idx, c in enumerate(streamable_str):
+        if idx == end - 1:
+            yield ServerSentEvent(data=c, event="end")
         yield ServerSentEvent(data=c, event="message")
         await asyncio.sleep(0.05)
     streamable_str = ""

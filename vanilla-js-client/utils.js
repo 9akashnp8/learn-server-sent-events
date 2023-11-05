@@ -16,3 +16,14 @@ export function createMessageIdPair() {
         aiMsgId: msgId.concat("-ai"),
     };
 }
+
+export function controlFormState(isSubmit) {
+    if (isSubmit) {
+        document.getElementById("userMessage").value = "";
+        document.getElementById("userMessage").setAttribute("disabled", true)
+        document.getElementById("sendMessageBtn").setAttribute("disabled", true)
+    } else {
+        document.getElementById("userMessage").removeAttribute("disabled")
+        document.getElementById("sendMessageBtn").removeAttribute("disabled")
+    }
+}

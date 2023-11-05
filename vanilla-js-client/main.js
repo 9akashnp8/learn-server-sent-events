@@ -1,5 +1,5 @@
 import './style.css'
-import { createChatMessageEl, createMessageIdPair } from "./utils.js"
+import { createChatMessageEl, createMessageIdPair, controlFormState } from "./utils.js"
 
 let msgId;
 
@@ -11,6 +11,10 @@ eventSource.addEventListener("message", (event) => {
   aiResponseEl.innerHTML += `${event.data}`
 })
 
+eventSource.addEventListener("end", (event) => {
+  controlFormState()
+})
+
 const formEl = document.getElementById("chatInputForm");
 const chatLogEl = document.getElementsByClassName("chatLog")[0];
 
@@ -19,7 +23,7 @@ formEl.addEventListener("submit", async function(e) {
 
   const formData = new FormData(e.target)
   const userMessage = formData.get("userMessage");
-  document.getElementById("userMessage").value = "";
+  controlFormState(true)
 
   msgId = createMessageIdPair();
   const userMessageEl = createChatMessageEl(msgId.userMsgId)
