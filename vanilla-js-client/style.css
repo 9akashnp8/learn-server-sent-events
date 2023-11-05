@@ -1,16 +1,27 @@
 body, html {
-  background-color: #334155;
+  background-color: #171717;
 }
 
 /* LAYOUT */
 .chatWindow {
-  height: 95vh;
+  height: 85vh;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
 }
 
-.chatLog {
+.chatLogWrapper {
   flex-grow: 1;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
+}
+
+.chatLogWrapper > ul > li:last-child {
+  scroll-snap-align: end;
+}
+
+.chatLog {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -30,6 +41,10 @@ ul.chatLog {
 
 #chatInputForm {
   display: flex;
+  gap: 10px;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 10px;
 }
 
 #userMessage {
@@ -41,9 +56,31 @@ ul.chatLog {
 /* COLORS */
 .user-chatMessage {
   color: white;
-  background-color: #1e293b;
+  /* background-color: #1e293b; */
 }
 
 .ai-chatMessage {
-  background-color: #94a3b8;
+  background-color: #a3a3a3;
+}
+
+/* Custom styling for the chat content scrollbar */
+::-webkit-scrollbar {
+  width: 0.75rem;
+
+}
+
+::-webkit-scrollbar-track {
+  background: #424242;
+  border-radius: 1rem;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: #616161;
+  border-radius: 1rem;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #757575;
 }
