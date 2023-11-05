@@ -50,8 +50,16 @@ ul.chatLog {
 #userMessage {
   flex-grow: 1;
   height: 40px;
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
+#sendMessageBtn {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
 
 /* COLORS */
 .user-chatMessage {
@@ -60,7 +68,7 @@ ul.chatLog {
 }
 
 .ai-chatMessage {
-  background-color: #a3a3a3;
+  background-color: #e5e5e5;
 }
 
 /* Custom styling for the chat content scrollbar */
