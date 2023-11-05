@@ -14,7 +14,7 @@ This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org
 
 
 ### Vanilla
-<video style="border-radius: 10px" src="docs/vanilla-js-demo.mp4" controls title="SSE Chat App Vanilla Js Demo"></video>
+https://github.com/9akashnp8/learn-server-sent-events/blob/main/docs/vanilla-js-demo.mp4
 
 
 ### React
