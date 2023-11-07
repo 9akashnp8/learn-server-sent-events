@@ -1,14 +1,11 @@
-import { useState, SyntheticEvent } from "react"
+import { useState, useContext, SyntheticEvent } from "react"
 
-import type { ChatMessageType } from "../../types";
+import { AppContext } from "../../context";
+import { Types } from "../../reducers";
 
-type Props = {
-    setMessageHistory: React.Dispatch<
-        React.SetStateAction<ChatMessageType[]>
-    >,
-}
 
-export default function ChatInput({ setMessageHistory }: Props) {
+export default function ChatInput() {
+    const { dispatch } = useContext(AppContext);
     const [ userMessage, setUserMessage ] = useState("");
 
     async function handleSubmit(e: SyntheticEvent) {
@@ -23,7 +20,7 @@ export default function ChatInput({ setMessageHistory }: Props) {
           body: JSON.stringify({message: userMessage})
         })
         if (result.ok) {
-          setMessageHistory((prevState) => [...prevState, {user: "user", content: userMessage}])
+            dispatch({type: Types.Update, payload: {user: "user", content: userMessage}})
         }
     }
 
