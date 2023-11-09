@@ -27,6 +27,7 @@ async def mock_async_generator():
     for idx, c in enumerate(streamable_str):
         if idx == end - 1:
             yield ServerSentEvent(data=c, event="end")
+            break
         yield ServerSentEvent(data=c, event="message")
         await asyncio.sleep(0.05)
     streamable_str = ""
@@ -43,5 +44,5 @@ def get_stream():
 @app.post("/stream")
 def post_user_message(payload: UserMessage):
     global streamable_str
-    streamable_str = payload.message
+    streamable_str = payload.message + " "
     return Response("success")
