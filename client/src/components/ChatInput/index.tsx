@@ -26,9 +26,9 @@ export default function ChatInput() {
 
     return (
         <div className='chatInput'>
-            <form method='POST' onSubmit={handleSubmit}>
-                <input type="text" name='userMessage' onChange={(e) => setUserMessage(e.target.value)} />
-                <button>Send</button>
+            <form method='POST' onSubmit={handleSubmit} id="chatInputForm">
+                <input type="text" name='userMessage' id="userMessage" onChange={(e) => setUserMessage(e.target.value)} required/>
+                <button type="submit" id="sendMessageBtn">Send</button>
             </form>
         </div>
     )

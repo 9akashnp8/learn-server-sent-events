@@ -1,0 +1,94 @@
+body, html {
+    background-color: #171717;
+  }
+  
+  /* LAYOUT */
+  .chatWindow {
+    height: 70vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chatLogWrapper {
+    flex-grow: 1;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-snap-type: y proximity;
+  }
+  
+  .chatLog > div:last-child {
+    scroll-snap-align: end;
+  }
+  
+  .chatLog {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  
+  ul.chatLog {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .chatMessage {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
+  #chatInputForm {
+    display: flex;
+    gap: 10px;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 10px;
+  }
+  
+  #userMessage {
+    flex-grow: 1;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  #sendMessageBtn {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  
+  /* COLORS */
+  .user-chatMessage {
+    color: white;
+    /* background-color: #1e293b; */
+  }
+  
+  .ai-chatMessage {
+    background-color: #e5e5e5;
+  }
+  
+  /* Custom styling for the chat content scrollbar */
+  ::-webkit-scrollbar {
+    width: 0.75rem;
+  
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #424242;
+    border-radius: 1rem;
+  
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #616161;
+    border-radius: 1rem;
+  
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #757575;
+  }

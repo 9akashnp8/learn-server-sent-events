@@ -9,7 +9,7 @@ export default function ChatMessage({ user, content }: Props) {
     if (!content) return null;
 
     return (
-        <div style={{
+        <div className={`${user}-chatMessage`} style={{
             color: user === 'system' ? 'black' : 'white',
             backgroundColor: user === 'system' ? 'lightgrey' : 'black',
             padding: 10,
