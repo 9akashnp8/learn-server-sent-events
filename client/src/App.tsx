@@ -1,34 +1,35 @@
 import { useEffect, useState } from 'react'
 
+import { fetchEventSource } from '@microsoft/fetch-event-source';
 import type { ChatMessageType } from './types';
 import ChatMessage from './components/ChatMessage';
 import ChatInput from './components/ChatInput';
+
+type eventSourceCallbackHandler = (data: string, event: string) => void
+
+function eventSourceWrapper(cb: eventSourceCallbackHandler) {
+  fetchEventSource('http://localhost:8000/stream', {
+    onmessage(ev) {
+      cb(ev.data, ev.event)
+    },
+  })
+}
 
 function App() {
   const [ aiResponse, setAiResponse ] = useState("");
   const [ messageHistory, setMessageHistory] = useState<ChatMessageType[]>([])
 
   useEffect(() => {
-    const evntSource = new EventSource("http://127.0.0.1:8000/stream", {
-      withCredentials: true,
+    let msg = ''
+    eventSourceWrapper((data, eventType) => {
+      if (eventType == 'end') {
+        setMessageHistory([...messageHistory, {user: 'system', content: msg}])
+        setAiResponse("")
+      } else {
+        msg += data
+        setAiResponse(msg)
+      }
     })
-
-    let accumMessage = "";
-
-    evntSource.addEventListener("message", (event) => {
-      accumMessage += event.data
-      setAiResponse(accumMessage)
-    })
-
-    evntSource.addEventListener("end", (_) => {
-      setMessageHistory([...messageHistory, {user: "system", content: aiResponse}])
-    })
-
-    evntSource.addEventListener("error", (_) => {
-      evntSource.close()
-    })
-
-    return () => evntSource.close()
   }, [messageHistory])
 
   return (
