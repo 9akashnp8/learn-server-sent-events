@@ -2,7 +2,7 @@
 
 ## About
 
-This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events), the specific use case being a Chat Application with Streaming Response from server. The repo contains implementations for Vannila js and React (WiP).
+This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events), the specific use case being a Chat Application with Streaming Response from server. The repo contains implementations for Vannila js and React.
 
 ## Built with    
 
@@ -12,10 +12,4 @@ This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org
 
 ## Demo
 
-
-### Vanilla
-![Chat with Streaming Response Vanilla JS Demo](docs/vanilla-js-demo.gif)
-
-
-### React
-*WiP*
+![Chat with Streaming Response](docs/demo.gif)
