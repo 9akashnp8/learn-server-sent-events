@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react"
 import { fetchEventSource } from '@microsoft/fetch-event-source';
+import type { EventSourceMessage } from "@microsoft/fetch-event-source";
 
 import { Types } from "../../reducers"
 import { AppContext } from "../../context"
@@ -9,7 +10,7 @@ type eventSourceCallbackHandler = (data: string, event: string) => void
 
 function eventSourceWrapper(cb: eventSourceCallbackHandler) {
   fetchEventSource('http://localhost:8000/stream', {
-    onmessage(ev) {
+    onmessage(ev: EventSourceMessage) {
       cb(ev.data, ev.event)
     },
   })

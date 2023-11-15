@@ -6,10 +6,19 @@ This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org
 
 ## Built with    
 
-- **Javascript**: Using the [EventSource API](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) to handle incoming message and display to the user.
-- **FastAPI**: Takes user input and adds it to a queue, streams the same input back to user via [sse_starlette](https://github.com/sysid/sse-starlette) EventSourceResponse.
+- [React](https://react.dev/)
+- Vanilla Javascript
+- [Python (FastAPI)](https://fastapi.tiangolo.com/)
+- [fetch-event-source](https://www.npmjs.com/package/@microsoft/fetch-event-source)
 
 
 ## Demo
 
 ![Chat with Streaming Response](docs/demo.gif)
+
+## Get it running
+
+1. Clone the repo:
+`git clone https://github.com/9akashnp8 learn-server-sent-events`
+
+2. Run `docker compose up` to get all the services up and running. The react client can be access via localhost:**5173** and vanilla-js-client via localhost:**5174**
