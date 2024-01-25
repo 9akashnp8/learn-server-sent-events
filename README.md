@@ -19,6 +19,6 @@ This is a demo repo that uses [Server-Sent Events](https://developer.mozilla.org
 ## Get it running
 
 1. Clone the repo:
-`git clone https://github.com/9akashnp8 learn-server-sent-events`
+`git clone https://github.com/9akashnp8/learn-server-sent-events.git`
 
 2. Run `docker compose up` to get all the services up and running. The react client can be access via localhost:**5173** and vanilla-js-client via localhost:**5174**
