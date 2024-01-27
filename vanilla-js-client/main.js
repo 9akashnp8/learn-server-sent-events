@@ -39,12 +39,12 @@ formEl.addEventListener("submit", async function(e) {
     })
 
     eventSource.addEventListener("end", (event) => {
+      eventSource.close()
       controlFormState()
     })
 
     eventSource.addEventListener("error", (ev) => {
         console.log("error", ev)
-        eventSource.close()
     })
   }
 })
