@@ -26,15 +26,16 @@ formEl.addEventListener("submit", async function(e) {
     },
     body: JSON.stringify({message: userMessage})
   })
+  const aiResponseEl = createChatMessageEl(msgId.aiMsgId, true);
+  chatLogEl.appendChild(aiResponseEl);
+
   if (result.ok) {
-    const aiResponseEl = createChatMessageEl(msgId.aiMsgId, true);
-    chatLogEl.appendChild(aiResponseEl);
+    const aiResponseEl = document.getElementById(msgId.aiMsgId);
+    aiResponseEl.style = ''
 
     const eventSource = new EventSource('http://127.0.0.1:8000/stream')
 
     eventSource.addEventListener("message", (event) => {
-      const aiResponseEl = document.getElementById(msgId.aiMsgId);
-      aiResponseEl.style = ''
       aiResponseEl.innerHTML += `${event.data}`
     })
 
